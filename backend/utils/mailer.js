@@ -33,7 +33,7 @@ const createMessage = ({ to, subject, message, filePath, fileName }) => {
     `Date: ${new Date().toUTCString()}`,
     "",
     `--${boundary}`,
-    "Content-Type: text/plain; charset=UTF-8",
+    "Content-Type: text/html; charset=UTF-8",
     "",
     message,
     "",
@@ -70,33 +70,39 @@ const sendMail = async ({ email, company, filePath, name, fileName }) => {
   }
 
 const message = `
-Hi ${name || "Hiring Team"},
+<h3>Hi ${name || "Hiring Team"},</h3>
 
-I hope you're doing well.
+<p>I hope you're doing well.</p>
 
-I’m excited to apply for a FRONTEND DEVELOPER (Fresher) opportunity at ${company || "your company"}. I have hands-on experience in React.js, JavaScript, HTML, and CSS, building responsive and user-friendly web applications.
+<p>I’m excited to apply for a <b>Frontend Developer (Fresher)</b> opportunity at <b>${company || "your company"}</b>. I have hands-on experience in React.js, JavaScript, HTML, and CSS, building responsive and user-friendly web applications.</p>
 
-Here is my key project:
+<p><b>Here is my key project:</b></p>
 
-Pizza Delivery Web App
-https://padre-gino-s-pizza.vercel.app
+<ul>
+  <li>
+    Pizza Delivery Web App<br/>
+    🔗 <a href="https://padre-gino-s-pizza.vercel.app">View Project</a>
+  </li>
+</ul>
 
-Along with frontend development, I have experience with Git/GitHub, API testing using Postman, and strong skills in debugging, performance optimization, and cross-browser compatibility.
+<p>Along with frontend development, I have experience with Git/GitHub, API testing using Postman, and strong skills in debugging, performance optimization, and cross-browser compatibility.</p>
 
-You can explore more of my work here:
+<p>You can explore more of my work here:</p>
 
-GitHub: https://github.com/raj-7h
-LinkedIn: https://www.linkedin.com/in/raj-jha7h
+<ul>
+  <li>GitHub: <a href="https://github.com/raj-7h">github.com/raj-7h</a></li>
+</ul>
 
-Please find my resume attached. I would appreciate the opportunity to contribute and grow with your team.
+<p>Please find my resume attached. I would appreciate the opportunity to contribute and grow with your team.</p>
 
-Thank you for your time and consideration.
+<p>Thank you for your time and consideration.</p>
 
-Warm regards,
-Raj Kumar Jha
+<p>
+Warm regards,<br/>
+Raj Kumar Jha<br/>
 📞 ${process.env.PHONE_USER} | ✉️ ${process.env.EMAIL_USER}
+</p>
 `;
-
   const rawMessage = createMessage({
     to: email,
     subject: "Application for Frontend Developer Role",
