@@ -25,7 +25,7 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 const sendMail = async ({ email, company, filePath, name }) => {
   return resend.emails.send({
-    from: `${process.env.EMAIL_USER} <onboarding@resend.dev>`,
+    from: "Raj Jha <onboarding@resend.dev>",
     to: email,
     subject: `Application for Frontend Developer Role`,
     text: `Hello ${name || "Hiring Team"},
@@ -57,7 +57,7 @@ Raj Kumar Jha
       ? [
           {
             filename: "Raj_resume.pdf",
-            path: fs.readFileSync(filePath),
+            content: fs.readFileSync(filePath),
           },
         ]
       : (() => {
