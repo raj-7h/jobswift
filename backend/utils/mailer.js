@@ -1,18 +1,30 @@
 // utils/mailer.js
 import nodemailer from "nodemailer";
+import { Resend } from "resend";
+
 import "dotenv/config";
+const resend = new Resend(process.env.RESEND_API_KEY);
+
+// const transporter = nodemailer.createTransport({
+//   service: "gmail",
+
+//   auth: {
+//     user: process.env.EMAIL_USER,
+//     pass: process.env.SECRET_PASS,
+//   },
+// });
+// const transporter = nodemailer.createTransport({
+//   host: "smtp.ethereal.email",
+//   port: 587,
+//   auth: {
+//     user: "ellis.gleason@ethereal.email",
+//     pass: "vQAmaXXTXHu2uKQP4z",
+//   },
+// });
 
 const sendMail = async ({ email, company, filePath, name }) => {
-  const transporter = nodemailer.createTransport({
-    service: "gmail",
-
-    auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.SECRET_PASS,
-    },
-  });
-  return transporter.sendMail({
-    from: process.env.EMAIL_USER,
+  return resend.emails.send({
+    from: `${process.env.EMAIL_USER} <onboarding@resend.dev>`,
     to: email,
     subject: `Application for Frontend Developer Role`,
     text: `Hello ${name || "Hiring Team"},
