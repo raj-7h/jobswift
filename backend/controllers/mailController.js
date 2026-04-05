@@ -13,6 +13,7 @@ export const sendMailHandler = async (req, res) => {
       company,
       name,
       filePath: req.file.path,
+      fileName: req.file.originalname,
     });
 
     res.json({ message: "Mail sent ✅" });
