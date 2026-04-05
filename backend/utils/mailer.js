@@ -49,7 +49,7 @@ Raj Kumar Jha
       ? [
           {
             filename: "Raj_resume.pdf",
-            path: fs.readFileSync(filePath),
+            content: fs.readFileSync(filePath),
           },
         ]
       : (() => {
