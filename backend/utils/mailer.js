@@ -2,18 +2,11 @@
 import nodemailer from "nodemailer";
 import "dotenv/config";
 const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 587,
-  secure: false, // Must be false for 587
-  requireTLS: true,
-  family: 4,
+  host: "gmail",
+
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.SECRET_PASS,
-  },
-  tls: {
-    ciphers: "SSLv3", // Helps with older handshake protocols
-    rejectUnauthorized: false,
   },
 });
 
