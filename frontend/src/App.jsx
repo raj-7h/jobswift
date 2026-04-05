@@ -39,16 +39,16 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-600 to-blue-500">
+    <div className="min-h-screen flex items-center justify-center px-4 sm:px-6 bg-gradient-to-br from-purple-600 to-blue-500">
       <Toaster />
 
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="backdrop-blur-lg bg-white/20 p-8 rounded-2xl shadow-xl w-96 text-white"
+        className="backdrop-blur-lg bg-white/20 p-5 sm:p-6 md:p-8 rounded-2xl shadow-xl w-full max-w-sm sm:max-w-md md:max-w-lg text-white"
       >
-        <h2 className="text-2xl font-bold mb-6 text-center">
+        <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-5 sm:mb-6 text-center">
           Job Mail Sender 🚀
         </h2>
 
@@ -60,7 +60,7 @@ function App() {
           placeholder="HR Name (optional)"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="input"
+          className="input text-base sm:text-lg md:text-lg"
         />
 
         <motion.input
@@ -71,7 +71,7 @@ function App() {
           placeholder="HR Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="input"
+          className="input text-base sm:text-lg md:text-lg"
         />
 
         <motion.input
@@ -82,10 +82,10 @@ function App() {
           placeholder="Company Name"
           value={company}
           onChange={(e) => setCompany(e.target.value)}
-          className="input"
+          className="input text-base sm:text-lg md:text-lg"
         />
 
-        <label className="flex flex-col items-center justify-center w-full mb-4 p-4 border-2 border-dashed border-white/40 rounded-xl cursor-pointer hover:bg-white/10 transition">
+        <label className="flex flex-col items-center justify-center w-full mb-4 p-3 sm:p-4 border-2 border-dashed border-white/40 rounded-xl cursor-pointer hover:bg-white/10 transition text-center">
           <span className="text-sm mb-2">
             {file ? file.name : "Click to upload Resume 📄"}
           </span>
@@ -100,7 +100,7 @@ function App() {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={sendMail}
-          className="w-full py-2 rounded-xl bg-white text-black font-semibold hover:scale-105 transition"
+          className="w-full py-2.5 sm:py-3 rounded-xl bg-white text-black font-semibold text-base sm:text-lg hover:scale-105 transition"
         >
           {loading ? "Sending..." : "Send Mail"}
         </motion.button>
