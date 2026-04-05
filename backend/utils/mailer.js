@@ -29,7 +29,7 @@ const createMessage = ({ to, subject, message, filePath, fileName }) => {
     `To: ${to}`,
     `Subject: ${subject}`,
     "MIME-Version: 1.0",
-    `Content-Type: multipart/mixed; boundary=${boundary}`,
+    `Content-Type: multipart/mixed; boundary="${boundary}"`,
     `Date: ${new Date().toUTCString()}`,
     "",
     `--${boundary}`,
