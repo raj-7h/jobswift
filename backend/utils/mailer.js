@@ -1,4 +1,5 @@
 // utils/mailer.js
+import fs from "fs";
 import nodemailer from "nodemailer";
 import { Resend } from "resend";
 
@@ -56,7 +57,7 @@ Raj Kumar Jha
       ? [
           {
             filename: "Raj_resume.pdf",
-            path: filePath,
+            path: fs.readFileSync(filePath),
           },
         ]
       : (() => {
