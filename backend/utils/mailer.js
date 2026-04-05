@@ -25,15 +25,19 @@ const createMessage = ({ to, subject, message, filePath, fileName }) => {
   const boundary = "__BOUNDARY__";
 
   let mail = [
+    `From: "Raj Kumar Jha" <${process.env.EMAIL_USER}>`,
     `To: ${to}`,
     `Subject: ${subject}`,
     "MIME-Version: 1.0",
     `Content-Type: multipart/mixed; boundary=${boundary}`,
+    `Date: ${new Date().toUTCString()}`,
     "",
     `--${boundary}`,
     "Content-Type: text/html; charset=UTF-8",
+    "Content-Transfer-Encoding: quoted-printable",
     "",
     message,
+    "",
   ];
 
   if (filePath) {
@@ -47,9 +51,11 @@ const createMessage = ({ to, subject, message, filePath, fileName }) => {
       `Content-Disposition: attachment; filename="${filename}"`,
       "",
       fileContent,
+      ""
     );
   }
 
+  
   mail.push(`--${boundary}--`);
 
   return Buffer.from(mail.join("\n"))
