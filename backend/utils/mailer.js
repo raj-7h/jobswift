@@ -23,17 +23,20 @@ const gmail = google.gmail({ version: "v1", auth: oauth2Client });
 // Helper to create raw email
 const createMessage = ({ to, subject, message, filePath, fileName }) => {
   const boundary = "__BOUNDARY__";
-
+   const messageId = `<${Date.now()}${Math.random().toString(36).substring(7)}@gmail.com>`;
   let mail = [
     `From: "Raj Kumar Jha" <${process.env.EMAIL_USER}>`,
     `To: ${to}`,
     `Subject: ${subject}`,
+    `Message-ID: ${messageId}`,
     "MIME-Version: 1.0",
     `Content-Type: multipart/mixed; boundary="${boundary}"`,
     `Date: ${new Date().toUTCString()}`,
+    "X-Mailer: Gmail-API-NodeJS",
     "",
     `--${boundary}`,
     "Content-Type: text/html; charset=UTF-8",
+    "Content-Transfer-Encoding: 7bit",
     "",
     message,
     "",
