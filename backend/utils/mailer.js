@@ -58,7 +58,7 @@ const createMessage = ({ to, subject, message, filePath, fileName }) => {
   
   mail.push(`--${boundary}--`);
 
-  return Buffer.from(mail.join("\n"))
+  return Buffer.from(mail.join("\r\n"))
     .toString("base64")
     .replace(/\+/g, "-")
     .replace(/\//g, "_")
