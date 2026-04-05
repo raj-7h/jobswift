@@ -1,26 +1,31 @@
-// utils/mailer.js
-import nodemailer from "nodemailer";
-import { Resend } from "resend";
+// @ts-ignore
+import SibApiV3Sdk from "sib-api-v3-sdk";
 import fs from "fs";
 import "dotenv/config";
-// const transporter = nodemailer.createTransport({
-//   host: "smtp.gmail.com",
-//   port: 587,
-//   secure: false,
-//   auth: {
-//     user: process.env.EMAIL_USER,
-//     pass: process.env.SECRET_PASS,
-//   },
-// });
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const client = SibApiV3Sdk.ApiClient.instance;
+const apiKey = client.authentications["api-key"];
+apiKey.apiKey = process.env.BREVO_API_KEY;
+
+const apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
 
 const sendMail = async ({ email, company, filePath, name }) => {
-  return resend.emails.send({
-    from: process.env.EMAIL_USER,
-    to: email,
-    subject: `Application for Frontend Developer Role`,
-    text: `Hello ${name || "Hiring Team"},
+  if (!filePath) {
+    throw new Error("Resume required ❌");
+  }
+
+  const sendSmtpEmail = {
+    sender: {
+      email: process.env.EMAIL_USER,
+      name: "Raj Kumar Jha",
+    },
+    to: [
+      {
+        email: email,
+      },
+    ],
+    subject: "Application for Frontend Developer Role",
+    textContent: `Hello ${name || "Hiring Team"},
 
 I hope you're doing well. I’m excited to apply for a Frontend Developer (Fresher) opportunity at ${company || "your company"}. I have hands on experience in React.js, JavaScript, HTML, and CSS, building responsive and user-friendly web applications.
 
@@ -45,17 +50,15 @@ Thank you for your time and consideration.
 Warm regards,  
 Raj Kumar Jha  
 📞 ${process.env.PHONE_USER} | ✉️ ${process.env.EMAIL_USER}`,
-    attachments: filePath
-      ? [
-          {
-            filename: "Raj_resume.pdf",
-            content: fs.readFileSync(filePath),
-          },
-        ]
-      : (() => {
-          throw new Error("Resume is required ❌");
-        })(),
-  });
+    attachment: [
+      {
+        name: "Raj_resume.pdf",
+        content: fs.readFileSync(filePath).toString("base64"),
+      },
+    ],
+  };
+
+  return await apiInstance.sendTransacEmail(sendSmtpEmail);
 };
 
 export default sendMail;
