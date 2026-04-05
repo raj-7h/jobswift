@@ -1,69 +1,60 @@
 // utils/mailer.js
 import fs from "fs";
-import nodemailer from "nodemailer";
-import { Resend } from "resend";
+import { TransactionalEmailsApi, SendSmtpEmail } from "@getbrevo/brevo";
 
 import "dotenv/config";
-const resend = new Resend(process.env.RESEND_API_KEY);
 
-// const transporter = nodemailer.createTransport({
-//   service: "gmail",
-
-//   auth: {
-//     user: process.env.EMAIL_USER,
-//     pass: process.env.SECRET_PASS,
-//   },
-// });
-// const transporter = nodemailer.createTransport({
-//   host: "smtp.ethereal.email",
-//   port: 587,
-//   auth: {
-//     user: "ellis.gleason@ethereal.email",
-//     pass: "vQAmaXXTXHu2uKQP4z",
-//   },
-// });
+let emailAPI = new TransactionalEmailsApi();
+emailAPI.authentications.apikey.apikey = process.env.BREVO_API_KEY;
 
 const sendMail = async ({ email, company, filePath, name }) => {
-  return resend.emails.send({
-    from: "Raj Jha <onboarding@resend.dev>",
-    to: email,
-    subject: `Application for Frontend Developer Role`,
-    text: `Hello ${name || "Hiring Team"},
+  let message = new SendSmtpEmail();
 
-I hope you're doing well. I’m excited to apply for a Frontend Developer (Fresher) opportunity at ${company || "your company"}. I have hands on experience in React.js, JavaScript, HTML, and CSS, building responsive and user-friendly web applications.
+  message.subject = "Application for Frontend Developer Role";
 
-Here are some of my key projects:
+  message.htmlContent = `
+    <p>Hello ${name || "Hiring Team"},</p>
 
-• Pizza Delivery Web App  
-🔗 https://padre-gino-s-pizza.vercel.app  
+    <p>I hope you're doing well. I’m excited to apply for a Frontend Developer (Fresher) opportunity at ${company || "your company"}.</p>
 
-• VaultTrack (Crypto Tracker)  
-🔗 https://vault-track-a-crypto-app.vercel.app  
+    <p>I have hands-on experience in React.js, JavaScript, HTML, and CSS, building responsive and user-friendly web applications.</p>
 
-Along with frontend development, I have experience with Git/GitHub, API testing using Postman, and strong skills in debugging, performance optimization, and cross-browser compatibility.
+    <p><b>Projects:</b></p>
+    <ul>
+      <li>Pizza Delivery Web App - https://padre-gino-s-pizza.vercel.app</li>
+      <li>VaultTrack (Crypto Tracker) - https://vault-track-a-crypto-app.vercel.app</li>
+    </ul>
 
-You can explore more of my work here:  
-• GitHub: https://github.com/raj-7h  
-• LinkedIn: www.linkedin.com/in/raj-jha7h  
+    <p>GitHub: https://github.com/raj-7h</p>
+    <p>LinkedIn: www.linkedin.com/in/raj-jha7h</p>
 
-Please find my resume attached. I would appreciate the opportunity to contribute and grow with your team.
+    <p>Thanks & Regards,<br/>Raj Kumar Jha<br/>📞 ${process.env.PHONE_USER} | ✉️ ${process.env.EMAIL_USER}</p>
+    `;
 
-Thank you for your time and consideration.
+  message.sender = {
+    name: "Raj Jha",
+    email: process.env.EMAIL_USER,
+  };
 
-Warm regards,  
-Raj Kumar Jha  
-📞 ${process.env.PHONE_USER} | ✉️ ${process.env.EMAIL_USER}`,
-    attachments: filePath
-      ? [
-          {
-            filename: "Raj_resume.pdf",
-            content: fs.readFileSync(filePath),
-          },
-        ]
-      : (() => {
-          throw new Error("Resume is required ❌");
-        })(),
-  });
+  message.to = [{ email }];
+
+  if (filePath) {
+    message.attachment = [
+      {
+        content: fs.readFileSync(filePath).toString("base64"),
+        name: "Raj_resume.pdf",
+      },
+    ];
+  } else {
+    throw new Error("Resume is required ❌");
+  }
+
+  try {
+    const response = await emailAPI.sendTransacEmail(message);
+    console.log("Email sent:", response.body);
+  } catch (error) {
+    console.error("Error sending email:", error.body || error);
+  }
 };
 
 export default sendMail;
