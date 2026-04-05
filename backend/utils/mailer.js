@@ -69,45 +69,32 @@ const sendMail = async ({ email, company, filePath, name, fileName }) => {
     throw new Error("Resume is required ❌");
   }
 
-  const message = `
-<h3>Hello ${name || "Hiring Team"},</h3>
+const message = `
+Hi ${name || "Hiring Team"},
 
-<p>I hope you're doing well.</p>
+I hope you're doing well.
 
-<p>I’m excited to apply for a <b>Frontend Developer (Fresher)</b> opportunity at <b>${company || "your company"}</b>. I have hands-on experience in React.js, JavaScript, HTML, and CSS, building responsive and user-friendly web applications.</p>
+I’m excited to apply for a FRONTEND DEVELOPER (Fresher) opportunity at ${company || "your company"}. I have hands-on experience in React.js, JavaScript, HTML, and CSS, building responsive and user-friendly web applications.
 
-<p><b>Here are some of my key projects:</b></p>
+Here is my key project:
 
-<ul>
-  <li>
-    Pizza Delivery Web App<br/>
-    🔗 <a href="https://padre-gino-s-pizza.vercel.app">View Project</a>
-  </li>
-  <br/>
-  <li>
-    VaultTrack (Digital Asset Tracker)<br/>
-    🔗 <a href="https://vault-track-a-crypto-app.vercel.app">View Project</a>
-  </li>
-</ul>
+Pizza Delivery Web App
+https://padre-gino-s-pizza.vercel.app
 
-<p>Along with frontend development, I have experience with Git/GitHub, API testing using Postman, and strong skills in debugging, performance optimization, and cross-browser compatibility.</p>
+Along with frontend development, I have experience with Git/GitHub, API testing using Postman, and strong skills in debugging, performance optimization, and cross-browser compatibility.
 
-<p>You can explore more of my work here:</p>
+You can explore more of my work here:
 
-<ul>
-  <li>GitHub: <a href="https://github.com/raj-7h">github.com/raj-7h</a></li>
-  <li>LinkedIn: <a href="https://www.linkedin.com/in/raj-jha7h">linkedin.com/in/raj-jha7h</a></li>
-</ul>
+GitHub: https://github.com/raj-7h
+LinkedIn: https://www.linkedin.com/in/raj-jha7h
 
-<p>Please find my resume attached. I would appreciate the opportunity to contribute and grow with your team.</p>
+Please find my resume attached. I would appreciate the opportunity to contribute and grow with your team.
 
-<p>Thank you for your time and consideration.</p>
+Thank you for your time and consideration.
 
-<p>
-Warm regards,<br/>
-Raj Kumar Jha<br/>
+Warm regards,
+Raj Kumar Jha
 📞 ${process.env.PHONE_USER} | ✉️ ${process.env.EMAIL_USER}
-</p>
 `;
 
   const rawMessage = createMessage({
