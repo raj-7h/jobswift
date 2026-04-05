@@ -1,14 +1,17 @@
 // utils/mailer.js
 import fs from "fs";
-import { TransactionalEmailsApi, SendSmtpEmail } from "@getbrevo/brevo";
+import Brevo from "@getbrevo/brevo";
 
 import "dotenv/config";
 
-let emailAPI = new TransactionalEmailsApi();
-emailAPI.authentications.apikey.apikey = process.env.BREVO_API_KEY;
+let defaultClient = Brevo.ApiClient.instance;
+let apiKey = defaultClient.authentications["api-key"];
+apiKey.apiKey = process.env.BREVO_API_KEY;
+
+let emailAPI = new Brevo.TransactionalEmailsApi();
 
 const sendMail = async ({ email, company, filePath, name }) => {
-  let message = new SendSmtpEmail();
+  let message = new Brevo.SendSmtpEmail();
 
   message.subject = "Application for Frontend Developer Role";
 
