@@ -34,7 +34,6 @@ const createMessage = ({ to, subject, message, filePath, fileName }) => {
     "",
     `--${boundary}`,
     "Content-Type: text/html; charset=UTF-8",
-    "Content-Transfer-Encoding: quoted-printable",
     "",
     message,
     "",
