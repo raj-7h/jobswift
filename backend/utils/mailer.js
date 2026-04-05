@@ -86,6 +86,10 @@ const message = `
     Pizza Delivery Web App<br/>
     🔗 <a href="https://padre-gino-s-pizza.vercel.app">View Project</a>
   </li>
+  <li>
+    VaultTrack (Digital Asset Tracker)<br/>
+    🔗 <a href="https://vault-track-a-crypto-app.vercel.app">View Project</a>
+  </li>
 </ul>
 
 <p>Along with frontend development, I have experience with Git/GitHub, API testing using Postman, and strong skills in debugging, performance optimization, and cross-browser compatibility.</p>
@@ -94,6 +98,7 @@ const message = `
 
 <ul>
   <li>GitHub: <a href="https://github.com/raj-7h">github.com/raj-7h</a></li>
+  <li>LinkedIn: <a href="https://www.linkedin.com/in/raj-jha7h">linkedin.com/in/raj-jha7h</a></li>
 </ul>
 
 <p>Please find my resume attached. I would appreciate the opportunity to contribute and grow with your team.</p>
