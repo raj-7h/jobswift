@@ -33,7 +33,7 @@ const createMessage = ({ to, subject, message, filePath, fileName }) => {
     `Date: ${new Date().toUTCString()}`,
     "",
     `--${boundary}`,
-    "Content-Type: text/html; charset=UTF-8",
+    "Content-Type: text/plain; charset=UTF-8",
     "",
     message,
     "",
