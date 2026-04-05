@@ -1,15 +1,22 @@
 // utils/mailer.js
+import nodemailer from "nodemailer";
 import { Resend } from "resend";
+import fs from "fs";
 import "dotenv/config";
+// const transporter = nodemailer.createTransport({
+//   host: "smtp.gmail.com",
+//   port: 587,
+//   secure: false,
+//   auth: {
+//     user: process.env.EMAIL_USER,
+//     pass: process.env.SECRET_PASS,
+//   },
+// });
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 const sendMail = async ({ email, company, filePath, name }) => {
-  if (!filePath) {
-    throw new Error("Resume required ❌");
-  }
-
-  return await resend.emails.send({
+  return resend.emails.send({
     from: process.env.EMAIL_USER,
     to: email,
     subject: `Application for Frontend Developer Role`,
@@ -42,7 +49,7 @@ Raj Kumar Jha
       ? [
           {
             filename: "Raj_resume.pdf",
-            path: filePath,
+            path: fs.readFileSync(filePath),
           },
         ]
       : (() => {
