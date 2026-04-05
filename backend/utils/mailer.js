@@ -86,7 +86,7 @@ const sendMail = async ({ email, company, filePath, name, fileName }) => {
   </li>
   <br/>
   <li>
-    VaultTrack (Crypto Tracker)<br/>
+    VaultTrack (Digital Asset Tracker)<br/>
     🔗 <a href="https://vault-track-a-crypto-app.vercel.app">View Project</a>
   </li>
 </ul>
